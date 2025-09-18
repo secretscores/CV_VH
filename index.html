@@ -66,23 +66,19 @@
     .header-photo { grid-area: photo; justify-self:end; }
 
     h1 {
-      font-size: clamp(18px, 2vw, 24px); /* ~la mitad del tamaño anterior */
+      font-size: clamp(18px, 2vw, 24px); /* tamaño reducido (~mitad) */
       line-height: 1.2;
       margin: 0 0 8px;
     }
     .subtitle { font-size: 14px; color: var(--muted); }
 
-    /* Contacto: una sola línea en desktop */
+    /* Contacto sin scroll: en línea si cabe, si no, salta a otra línea */
     .contact {
-      display: grid;
-      grid-auto-flow: column;           /* Fuerza a ir en línea */
-      grid-auto-columns: max-content;   /* Cada chip ocupa su ancho */
-      column-gap: 16px;
-      row-gap: 10px;
+      display: flex;
+      flex-wrap: wrap;    /* evita scroll horizontal */
+      gap: 10px 16px;
       margin-top: 12px;
       align-items: center;
-      overflow-x: auto;
-      padding-bottom: 2px;
     }
     .contact a { color: var(--ink); text-decoration: none; }
     .contact a:hover { color: var(--brand); }
@@ -92,15 +88,17 @@
       background: var(--chip); border:1px solid var(--line); font-size:14px;
       white-space: nowrap;
     }
-    .chip svg { width:16px; height:16px; opacity:.8; }
+    .chip svg { width: 16px; height: 16px; opacity:.8; }
 
+    /* Botón más compacto */
     .btn {
-      appearance:none; border:none; border-radius:12px; padding:10px 14px;
+      appearance:none; border:none; border-radius:12px;
+      padding:8px 12px;                 /* antes 10px 14px */
+      font-size:14px;                   /* ligeramente menor */
       font-weight:600; cursor:pointer; color:var(--ink);
       background: linear-gradient(180deg, var(--brand), #3569ff);
-      box-shadow: 0 6px 18px rgba(79,140,255,.25);
+      box-shadow: 0 4px 12px rgba(79,140,255,.25);
     }
-    .btn.secondary { background: var(--panel); border:1px solid var(--line); box-shadow:none; }
     .btn:hover { filter: brightness(1.05); }
 
     /* Foto */
@@ -132,7 +130,7 @@
     .role ul { margin: 8px 0 0 18px; padding: 0; }
     .role li { margin: 6px 0; }
 
-    /* Áreas de Especialidad: vertical */
+    /* Áreas de Especialidad: vertical (cada bloque debajo del otro) */
     .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
     .grid strong { display:block; font-size: 15px; color: var(--brand); margin-bottom: 6px; }
     .tagset { display:flex; flex-wrap: wrap; gap: 8px; }
@@ -150,7 +148,6 @@
           "actions";
       }
       .header-photo { justify-self:start; }
-      .contact { grid-auto-flow: row; grid-auto-columns: unset; } /* Se apilan en móvil */
       main { grid-template-columns: 1fr; }
     }
 
@@ -173,7 +170,7 @@
         <h1 itemprop="name">Víctor Hugo Valdez Germán</h1>
         <div class="subtitle" itemprop="jobTitle">Administrador ERP · Ingeniero Informático</div>
 
-        <!-- CONTACTO: UNA SOLA LÍNEA EN DESKTOP -->
+        <!-- CONTACTO (sin scroll, se acomoda en varias líneas solo si no cabe) -->
         <div class="contact" role="list">
           <span class="chip" role="listitem">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.9 15.9 0 006.6 6.6l2.2-2.2a1 1 0 011-.25c1.08.36 2.25.55 3.45.55a1 1 0 011 1V20a1 1 0 01-1 1C12.4 21 3 11.6 3 2a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.19 2.37.55 3.45a1 1 0 01-.25 1L6.6 10.8z"/></svg>
@@ -192,7 +189,7 @@
 
       <nav class="header-actions" aria-label="Acciones">
         <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
-        <a class="btn secondary" href="#contacto" style="text-decoration:none;">Contacto</a>
+        <!-- Botón "Contacto" eliminado -->
       </nav>
 
       <div class="header-photo">
@@ -207,7 +204,10 @@
         <section class="summary" aria-labelledby="perfil">
           <h2 id="perfil">Perfil</h2>
           <p>
-            Ingeniero Informático y Administrador ERP con más de 10 años de experiencia en TI. Especializado en la gestión de movilidad empresarial (MDM) bajo marcos ITIL, administración de Oracle Cloud ERP y automatización de procesos con Microsoft Power Platform y otras plataformas. Capaz de traducir requerimientos de negocio en soluciones digitales medibles, fortaleciendo la operación y la toma de decisiones para la optimización de los recursos.
+            Ingeniero Informático y Administrador ERP con más de 10 años de experiencia en TI. Especializado en
+            administración de Oracle Cloud ERP, automatización de procesos con Microsoft Power Platform y
+            gestión de movilidad empresarial (MDM) bajo marcos ITIL. Capaz de traducir requerimientos de negocio
+            en soluciones digitales medibles, fortaleciendo la operación y la toma de decisiones.
           </p>
         </section>
 
