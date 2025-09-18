@@ -44,10 +44,10 @@
 
     .wrap { max-width: 1024px; margin: 0 auto; padding: 28px 20px 64px; }
 
-    /* ===== Header (3 columnas en desktop) ===== */
+    /* ===== Header ===== */
     header {
       display: grid;
-      grid-template-columns: 1fr auto auto;        /* info | acciones | foto */
+      grid-template-columns: 1fr auto auto;   /* info | acciones | foto */
       grid-template-areas: "info actions photo";
       gap: 24px;
       align-items: center;
@@ -62,21 +62,27 @@
       background: linear-gradient(90deg, rgba(79,140,255,.2), rgba(52,211,153,.15)); filter: blur(30px); opacity:.2; }
 
     .header-info { grid-area: info; min-width: 0; }
-    .header-actions { grid-area: actions; display:flex; gap:12px; flex-wrap: wrap; justify-self: end; }
+    .header-actions { grid-area: actions; display:flex; gap:12px; flex-wrap: wrap; justify-self:end; }
     .header-photo { grid-area: photo; justify-self:end; }
 
-    h1 { font-size: clamp(14px, 4.2vw, 42px); line-height: 1.1; margin: 0 0 8px; }
-    .subtitle { font-size: clamp(14px, 2vw, 18px); color: var(--muted); }
+    h1 {
+      font-size: clamp(18px, 2vw, 24px); /* ~la mitad del tamaño anterior */
+      line-height: 1.2;
+      margin: 0 0 8px;
+    }
+    .subtitle { font-size: 14px; color: var(--muted); }
 
-    /* Chips de contacto en una sola línea en desktop */
+    /* Contacto: una sola línea en desktop */
     .contact {
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: max-content;
+      grid-auto-flow: column;           /* Fuerza a ir en línea */
+      grid-auto-columns: max-content;   /* Cada chip ocupa su ancho */
       column-gap: 16px;
       row-gap: 10px;
       margin-top: 12px;
       align-items: center;
+      overflow-x: auto;
+      padding-bottom: 2px;
     }
     .contact a { color: var(--ink); text-decoration: none; }
     .contact a:hover { color: var(--brand); }
@@ -86,7 +92,7 @@
       background: var(--chip); border:1px solid var(--line); font-size:14px;
       white-space: nowrap;
     }
-    .chip svg { width: 16px; height: 16px; opacity:.8; }
+    .chip svg { width:16px; height:16px; opacity:.8; }
 
     .btn {
       appearance:none; border:none; border-radius:12px; padding:10px 14px;
@@ -97,7 +103,7 @@
     .btn.secondary { background: var(--panel); border:1px solid var(--line); box-shadow:none; }
     .btn:hover { filter: brightness(1.05); }
 
-    /* Foto de perfil alineada al nivel del nombre */
+    /* Foto */
     .avatar-ring { position:relative; display:inline-block; padding:6px; border-radius:50%;
       background: radial-gradient(120px 100px at 50% -20%, rgba(79,140,255,.18), transparent 70%); }
     .avatar {
@@ -115,23 +121,22 @@
 
     .summary p { margin: 0; font-size: 17px; color: var(--ink); }
 
+    /* Experiencia */
     .timeline { position: relative; }
     .timeline::before { content:""; position:absolute; left:10px; top:6px; bottom:6px; width:2px; background: var(--line); }
     .role { position: relative; padding-left: 34px; }
     .role + .role { margin-top: 18px; }
     .role::before { content:""; position:absolute; left:4px; top:6px; width:12px; height:12px; background: var(--brand); border-radius:50%; box-shadow:0 0 0 4px rgba(79,140,255,.15); }
-    .role h3 { margin:0; font-size: 18px; }
-    .role .meta { display:flex; flex-wrap:wrap; gap:8px 14px; margin:6px 0 8px; color: var(--muted); font-size: 14px; }
+    .role h3 { margin:0; font-size: 16px; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px 14px; margin:6px 0 8px; color: var(--muted); font-size: 14px; }
     .role ul { margin: 8px 0 0 18px; padding: 0; }
     .role li { margin: 6px 0; }
 
-    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 14px; }
+    /* Áreas de Especialidad: vertical */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    .grid strong { display:block; font-size: 15px; color: var(--brand); margin-bottom: 6px; }
     .tagset { display:flex; flex-wrap: wrap; gap: 8px; }
     .tag { padding:8px 10px; border-radius:10px; background: var(--chip); border:1px solid var(--line); font-size: 14px; }
-
-    .cert { display:flex; justify-content:space-between; align-items:center; gap:10px; border-bottom:1px dashed var(--line); padding:10px 0; }
-    .cert:last-child { border-bottom: none; }
-    .cert span { color: var(--muted); font-size: 14px; }
 
     footer { text-align:center; color: var(--muted); font-size: 13px; margin-top: 18px; }
 
@@ -143,10 +148,9 @@
           "photo"
           "info"
           "actions";
-        text-align: left;
       }
       .header-photo { justify-self:start; }
-      .contact { grid-auto-flow: row; grid-auto-columns: unset; grid-template-columns: 1fr; }
+      .contact { grid-auto-flow: row; grid-auto-columns: unset; } /* Se apilan en móvil */
       main { grid-template-columns: 1fr; }
     }
 
@@ -168,6 +172,8 @@
       <div class="header-info">
         <h1 itemprop="name">Víctor Hugo Valdez Germán</h1>
         <div class="subtitle" itemprop="jobTitle">Administrador ERP · Ingeniero Informático</div>
+
+        <!-- CONTACTO: UNA SOLA LÍNEA EN DESKTOP -->
         <div class="contact" role="list">
           <span class="chip" role="listitem">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.9 15.9 0 006.6 6.6l2.2-2.2a1 1 0 011-.25c1.08.36 2.25.55 3.45.55a1 1 0 011 1V20a1 1 0 01-1 1C12.4 21 3 11.6 3 2a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.19 2.37.55 3.45a1 1 0 01-.25 1L6.6 10.8z"/></svg>
@@ -216,9 +222,9 @@
               <div class="meta"><span>2024 – Actualidad</span><span>Los Mochis, Sinaloa, México</span></div>
               <ul>
                 <li>Administración integral de <strong>Oracle Cloud ERP</strong>: configuración, seguridad y operación de catálogos.</li>
-                <li>Construcción de soluciones de <strong>automatización</strong> y <strong>reporteo</strong> con <em>Power Apps</em> y <em>Power Automate</em> para áreas administrativas.</li>
-                <li>Seguimiento con líderes de módulos: gobierno de cambios, priorización y cierre de requerimientos.</li>
-                <li>Creación de <em>categorías de artículos</em>, <em>Sites / Unidades de Negocio</em>, <em>subinventarios de venta</em> y <em>reglas de compra</em> (SC/OC).</li>
+                <li>Soluciones de <strong>automatización y reporteo</strong> con <em>Power Apps</em> y <em>Power Automate</em> para áreas administrativas.</li>
+                <li>Gobierno de cambios con líderes de módulos; priorización y cierre de requerimientos.</li>
+                <li>Creación de <em>categorías de artículos</em>, <em>Sites / UEN</em>, <em>subinventarios de venta</em> y <em>reglas de compra</em> (SC/OC).</li>
                 <li>Gestión de incidencias con Oracle y consultoras, asegurando la estabilidad del ERP y el cumplimiento operativo.</li>
               </ul>
             </article>
@@ -227,10 +233,10 @@
               <h3>Administrador de Infraestructura TI · Corporativo Paquetexpress</h3>
               <div class="meta"><span>2019 – 2024</span><span>Los Mochis, Sinaloa, México</span></div>
               <ul>
-                <li>Integración y transformación de datos (BD y servicios web) para la creación de indicadores de gestión.</li>
-                <li>Atención a incidentes y requerimientos con prácticas <strong>ITIL</strong>; prevención de fallas y mejora continua.</li>
-                <li>Administración del parque móvil corporativo (handhelds, smartphones, tabletas) y plataforma <strong>MDM</strong>.</li>
-                <li>Gestión de licenciamiento y soluciones con <strong>Microsoft 365</strong> (incl. <em>SharePoint</em>); coordinación de proyectos de infraestructura.</li>
+                <li>Integración y transformación de datos (BD y servicios web) para indicadores de gestión.</li>
+                <li>Atención a incidentes con prácticas <strong>ITIL</strong>; prevención de fallas y mejora continua.</li>
+                <li>Administración del parque móvil corporativo y plataforma <strong>MDM</strong> (handhelds, smartphones, tabletas).</li>
+                <li>Gestión de licenciamiento y soluciones <strong>Microsoft 365</strong> (incl. <em>SharePoint</em>); coordinación de proyectos de infraestructura.</li>
                 <li>Negociación y relación con proveedores de hardware y software de última generación.</li>
               </ul>
             </article>
@@ -240,7 +246,7 @@
               <div class="meta"><span>2018 – 2019</span><span>Los Mochis, Sinaloa, México</span></div>
               <ul>
                 <li>Desarrollo y mantenimiento del <strong>sitio web</strong> corporativo y cuentas de correo.</li>
-                <li>Apoyo administrativo y logístico: gestión de fletes, plantillas de remisiones y órdenes de carga.</li>
+                <li>Apoyo administrativo y logístico: gestión de fletes, remisiones y órdenes de carga.</li>
               </ul>
             </article>
 
@@ -249,7 +255,7 @@
               <div class="meta"><span>2014 – 2018</span><span>Los Mochis, Sinaloa, México</span></div>
               <ul>
                 <li>Gestión del ciclo de vida de <strong>activos móviles</strong> (handhelds, celulares, tabletas): compra, configuración y despliegue.</li>
-                <li>Implementación de herramientas de control remoto y eliminación de <em>bloatware</em> para asegurar rendimiento y seguridad.</li>
+                <li>Implementación de control remoto y eliminación de <em>bloatware</em> para asegurar rendimiento y seguridad.</li>
                 <li>Negociación con proveedores de hardware para optimizar la operación de campo.</li>
               </ul>
             </article>
@@ -313,6 +319,14 @@
           <div class="cert">
             <div><strong>Fundamentos ITIL v4</strong> · Pink Elephant (Online)</div>
             <span>2022</span>
+          </div>
+          <div class="cert">
+            <div><strong>Implementación de ITIL</strong> · INTTELMEX</div>
+            <span>2017</span>
+          </div>
+          <div class="cert">
+            <div><strong>Taller de Emprendedores LEAN CANVAS</strong> · Instituto Tecnológico de Los Mochis</div>
+            <span>2013</span>
           </div>
         </section>
 
