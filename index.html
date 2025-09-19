@@ -259,9 +259,10 @@
       </div>
     </header>
 
-    <br><nav class="header-actions" aria-label="Acciones">
-        <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
-      </nav>
+    <br>
+    <nav class="header-actions" aria-label="Acciones">
+  <a id="dl-pdf" class="btn">Descargar PDF</a>
+</nav>
 
     <main>
       <!-- PERFIL A TODO EL ANCHO -->
@@ -406,5 +407,16 @@
       ¿Te interesa colaborar? Escríbeme a <a href="mailto:valdezvictorh@gmail.com">valdezvictorh@gmail.com</a> · Tel. <a href="tel:+526683209670">+52 668 320 9670</a>
     </footer>
   </div>
+  <script>
+    (function () {
+      // NOMBRE EXACTO del PDF que está junto al index.html
+      const fileName = 'CV - Víctor Hugo, septiembre 2025.pdf';
+
+      // Aplica URL encoding al href y conserva el nombre legible en "download"
+      const link = document.getElementById('dl-pdf');
+      link.href = encodeURI(fileName);
+      link.setAttribute('download', fileName);
+    })();
+  </script>
 </body>
 </html>
