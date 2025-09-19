@@ -66,16 +66,16 @@
     .header-photo { grid-area: photo; justify-self:end; }
 
     h1 {
-      font-size: clamp(18px, 2vw, 24px); /* tamaño reducido (~mitad) */
+      font-size: clamp(18px, 2vw, 24px); /* tamaño reducido */
       line-height: 1.2;
       margin: 0 0 8px;
     }
     .subtitle { font-size: 14px; color: var(--muted); }
 
-    /* Contacto sin scroll: en línea si cabe, si no, salta a otra línea */
+    /* Contacto (sin scroll; salta a 2 líneas solo si no cabe) */
     .contact {
       display: flex;
-      flex-wrap: wrap;    /* evita scroll horizontal en pantalla */
+      flex-wrap: wrap;
       gap: 12px 16px;
       margin-top: 12px;
       align-items: center;
@@ -90,12 +90,10 @@
     }
     .chip svg { width: 16px; height: 16px; opacity:.8; }
 
-    /* Botón más compacto */
+    /* Botón */
     .btn {
       appearance:none; border:none; border-radius:12px;
-      padding:8px 12px;                 /* antes 10px 14px */
-      font-size:14px;                   /* ligeramente menor */
-      font-weight:600; cursor:pointer; color:var(--ink);
+      padding:8px 12px; font-size:14px; font-weight:600; cursor:pointer; color:var(--ink);
       background: linear-gradient(180deg, var(--brand), #3569ff);
       box-shadow: 0 4px 12px rgba(79,140,255,.25);
     }
@@ -111,12 +109,25 @@
     }
 
     /* ===== Layout principal ===== */
-    main { display:grid; grid-template-columns: 1.15fr .85fr; gap: 24px; margin-top: 24px; align-items:start; }
+    main {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;  /* izquierda | derecha */
+      gap: 24px;
+      margin-top: 24px;
+      align-items:start;
+    }
 
-    section { background: var(--panel); border:1px solid var(--line); border-radius: 18px; padding: 22px; }
+    section {
+      background: var(--panel);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+    }
     section + section { margin-top: 18px; }
     h2 { font-size: 16px; letter-spacing:.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
 
+    /* PERFIL ocupa todo el ancho */
+    .summary { grid-column: 1 / -1; }
     .summary p { margin: 0; font-size: 17px; color: var(--ink); }
 
     /* Experiencia */
@@ -130,13 +141,15 @@
     .role ul { margin: 8px 0 0 18px; padding: 0; }
     .role li { margin: 6px 0; }
 
-    /* Áreas de Especialidad: vertical (cada bloque debajo del otro) */
+    /* Áreas de Especialidad: vertical */
     .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
     .grid strong { display:block; font-size: 15px; color: var(--brand); margin-bottom: 6px; }
     .tagset { display:flex; flex-wrap: wrap; gap: 8px; }
     .tag { padding:8px 10px; border-radius:10px; background: var(--chip); border:1px solid var(--line); font-size: 14px; }
 
     footer { text-align:center; color: var(--muted); font-size: 13px; margin-top: 18px; }
+    footer a { color: inherit; font-size: inherit; text-decoration: none; }
+    footer a:hover { color: var(--brand); }
 
     /* ===== Responsivo ===== */
     @media (max-width: 980px) {
@@ -149,71 +162,19 @@
       }
       .header-photo { justify-self:start; }
       main { grid-template-columns: 1fr; }
+      .summary { grid-column: auto; }
     }
 
-    /* ===== PRINT A4 AFÍN ===== */
-    @page { size: A4; margin: 12mm; } /* márgenes compactos y seguros */
+    /* ===== Print ===== */
+    @page { size: A4; margin: 14mm; }
     @media print {
-      html, body { background: #fff !important; }
-      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .wrap { max-width: none !important; padding: 0 !important; }
-
-      /* Simplificar tarjetas para papel (sin brillos ni sombras) */
-      header, section {
-        background: #fff !important;
-        border: 0.5pt solid #d7dce2 !important;
-        border-radius: 8pt !important;
-        box-shadow: none !important;
-      }
-      header { padding: 14pt !important; }
-      section { padding: 12pt !important; }
-      header::after { display:none !important; }
-
-      /* Cabecera compacta y en una línea */
-      h1 { font-size: 16pt !important; margin-bottom: 4pt !important; }
-      .subtitle { font-size: 10.5pt !important; }
-      .contact {
-        flex-wrap: nowrap !important;  /* fuerzo 1 sola línea en PDF */
-        gap: 10pt !important;
-      }
-      .chip {
-        padding: 4pt 8pt !important;
-        font-size: 10pt !important;
-        background: #fff !important;
-        border: 0.5pt solid #d7dce2 !important;
-      }
-      .chip svg { display:none !important; } /* limpio iconos en papel */
-
-      /* Dos columnas equilibradas y sin desbordes */
-      main {
-        grid-template-columns: 58% 42% !important;
-        gap: 12pt !important;
-        margin-top: 12pt !important;
-      }
-
-      /* Tipografías y ritmos más densos */
-      h2 { font-size: 11pt !important; margin-bottom: 8pt !important; color:#444 !important; }
-      .summary p { font-size: 10.5pt !important; }
-
-      .role h3 { font-size: 10.5pt !important; }
-      .meta { font-size: 9.5pt !important; }
-      .role li { margin: 4pt 0 !important; }
-
-      /* Línea de tiempo más sutil */
-      .role { padding-left: 20pt !important; }
-      .timeline::before { left: 6pt !important; background:#e5e7eb !important; }
-
-      /* Ajuste de foto para papel */
-      .avatar-ring { padding: 0 !important; background: transparent !important; }
-      .avatar { width: 90pt !important; height: 90pt !important; box-shadow: none !important; border: 0.5pt solid #d7dce2 !important; }
-
-      /* Ocultar elementos interactivos */
+      body { background: #fff; }
       .header-actions, .btn { display:none !important; }
-
-      /* Evitar cortes feos */
-      header, section, .timeline, .role, .cert, ul, li { break-inside: avoid; page-break-inside: avoid; }
-      h2 { break-after: avoid; page-break-after: avoid; }
-      p, li { orphans: 3; widows: 3; }
+      header, section { box-shadow:none; }
+      .wrap { padding: 0; }
+      main { grid-template-columns: 60% 40%; gap: 18px; }
+      .summary { grid-column: 1 / -1; }
+      section, .role, .cert { break-inside: avoid; page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -224,7 +185,6 @@
         <h1 itemprop="name">Víctor Hugo Valdez Germán</h1>
         <div class="subtitle" itemprop="jobTitle">Administrador ERP · Ingeniero Informático</div>
 
-        <!-- CONTACTO -->
         <div class="contact" role="list">
           <span class="chip" role="listitem">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.9 15.9 0 006.6 6.6l2.2-2.2a1 1 0 011-.25c1.08.36 2.25.55 3.45.55a1 1 0 011 1V20a1 1 0 01-1 1C12.4 21 3 11.6 3 2a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.19 2.37.55 3.45a1 1 0 01-.25 1L6.6 10.8z"/></svg>
@@ -241,10 +201,6 @@
         </div>
       </div>
 
-      <nav class="header-actions" aria-label="Acciones">
-        <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
-      </nav>
-
       <div class="header-photo">
         <span class="avatar-ring">
           <img src="foto.jpg" alt="Foto de Víctor Hugo Valdez" class="avatar" />
@@ -252,15 +208,21 @@
       </div>
     </header>
 
-    <main>
-      <div>
-        <section class="summary" aria-labelledby="perfil">
-          <h2 id="perfil">Perfil</h2>
-          <p>
-            Ingeniero Informático y Administrador ERP con más de 10 años de experiencia en TI. Especializado en la gestión de movilidad empresarial (MDM) bajo marcos ITIL, administración de Oracle Cloud ERP y automatización de procesos con Microsoft Power Platform y otras plataformas. Capaz de traducir requerimientos de negocio en soluciones digitales medibles, fortaleciendo la operación y la toma de decisiones para la optimización de los recursos.
-          </p>
-        </section>
+    <br><nav class="header-actions" aria-label="Acciones">
+        <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+      </nav>
 
+    <main>
+      <!-- PERFIL A TODO EL ANCHO -->
+      <section class="summary" aria-labelledby="perfil">
+        <h2 id="perfil">Perfil</h2>
+        <p>
+          Ingeniero Informático y Administrador ERP con más de 10 años de experiencia en TI. Especializado en la gestión de movilidad empresarial (MDM) bajo marcos ITIL, administración de Oracle Cloud ERP y automatización de procesos con Microsoft Power Platform y otras plataformas. Capaz de traducir requerimientos de negocio en soluciones digitales medibles, fortaleciendo la operación y la toma de decisiones para la optimización de los recursos.
+        </p>
+      </section>
+
+      <!-- COLUMNA IZQUIERDA -->
+      <div>
         <section aria-labelledby="experiencia">
           <h2 id="experiencia">Experiencia Profesional</h2>
           <div class="timeline">
@@ -310,6 +272,7 @@
         </section>
       </div>
 
+      <!-- COLUMNA DERECHA -->
       <aside>
         <section aria-labelledby="habilidades">
           <h2 id="habilidades">Áreas de Especialidad</h2>
@@ -378,7 +341,7 @@
         </section>
 
         <section aria-labelledby="otros">
-          <h2 id="otros">Otras competencias</h2>
+          <h2 id="otros">Otras Competencias</h2>
           <ul>
             <li>Resolución ágil de conflictos informáticos; enfoque a servicio y trabajo en equipo.</li>
             <li>Comunicación clara, aprendizaje continuo y gestión bajo presión.</li>
