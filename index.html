@@ -165,17 +165,63 @@
       .summary { grid-column: auto; }
     }
 
-    /* ===== Print ===== */
-    @page { size: A4; margin: 14mm; }
-    @media print {
-      body { background: #fff; }
-      .header-actions, .btn { display:none !important; }
-      header, section { box-shadow:none; }
-      .wrap { padding: 0; }
-      main { grid-template-columns: 60% 40%; gap: 18px; }
-      .summary { grid-column: 1 / -1; }
-      section, .role, .cert { break-inside: avoid; page-break-inside: avoid; }
-    }
+    /* ===== PRINT A4 PRO ===== */
+@page { size: A4; margin: 12mm; }  /* márgenes seguros */
+@media print {
+  /* Colores y fondos estables en papel */
+  html, body { background: #fff !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Linearizamos el flujo para mantener el ORDEN de lectura */
+  header, main, footer { display: block !important; }
+  main { display: block !important; }   /* sin grid en impresión */
+  .summary { display: block !important; } /* Perfil completo antes del resto */
+
+  /* Tarjetas limpias (sin sombras ni brillos) */
+  header, section {
+    background: #fff !important;
+    border: 0.5pt solid #d7dce2 !important;
+    border-radius: 8pt !important;
+    box-shadow: none !important;
+    padding: 12pt !important;
+    margin: 0 0 10pt 0 !important;
+  }
+  header { padding: 14pt !important; }
+  header::after { display: none !important; }
+
+  /* Tipografías compactas para reducir páginas */
+  h1 { font-size: 16pt !important; margin: 0 0 4pt !important; }
+  .subtitle { font-size: 10.5pt !important; }
+  h2 { font-size: 11pt !important; margin: 0 0 8pt !important; color:#444 !important; }
+  .summary p, .role h3, .meta, li, p { font-size: 10.5pt !important; line-height: 1.35 !important; }
+
+  /* Contacto en una sola línea, sin iconos azules ni subrayados */
+  .header-actions, .btn { display: none !important; } /* ocultar botón */
+  .contact { display: flex !important; flex-wrap: nowrap !important; gap: 8pt !important; }
+  .chip { padding: 3pt 7pt !important; border: 0.5pt solid #d7dce2 !important; background:#fff !important; }
+  .chip svg { display: none !important; }
+  a { color: #111 !important; text-decoration: none !important; }
+
+  /* Línea de tiempo compacta */
+  .timeline::before { left: 6pt !important; background:#e5e7eb !important; }
+  .role { padding-left: 18pt !important; }
+  .role + .role { margin-top: 10pt !important; }
+  .meta { color:#555 !important; }
+  ul { margin: 6pt 0 0 16pt !important; padding: 0 !important; list-style: disc outside !important; }
+  li { margin: 3pt 0 !important; }
+
+  /* Evitar cortes “feos” entre bullets/tarjetas/roles */
+  header, section, .timeline, .role, .cert, ul, li { break-inside: avoid; page-break-inside: avoid; }
+  h2 { break-after: avoid; page-break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+
+  /* Foto: tamaño y borde sobrios */
+  .avatar-ring { padding: 0 !important; background: transparent !important; }
+  .avatar { width: 90pt !important; height: 90pt !important; box-shadow: none !important; border: 0.5pt solid #d7dce2 !important; }
+
+  /* Footer */
+  footer { font-size: 10.5pt !important; color:#444 !important; }
+}
   </style>
 </head>
 <body>
